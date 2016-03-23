@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<!--This is the sites home page and will display the list of videos in a grid format-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Stories</title>
+</head>
+<body>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"></script>
+    <!--Put top title pane here, possible call JS function to generate it so it will be the same across all the pages-->
+    <div name="topMenu"></div>
+    <!--Templated Loop to link in videos from Django Database-->
+    <div name="videoArea">
+        {% if videoList %}
+            <table>
+                <!--Loop Through Every Video-->
+                {% for video in videoList %}
+                    <!--If this is the first iteration, add a row tag-->
+                    {% if forloop.first%}
+                        <tr>
+                    {% endif %}
+                    <!--If the counter is divisble by 3 then add a row cut off and end tag-->
+                    {% if not forloop.first and forloop.counter0|divisbleby:"3" %}
+                        </tr><tr>
+                    {% endif %}
+                    <td>
+                        <!--Insert Video-->
+                        <div name ="video{{forloop.counter0}}">
+                            <iframe id="videoPlayer{{forloop.counter0}}" type="text/html" width="640" height="390"
+                                    src="http://www.youtube.com/embed/{{video.youtubeId}}?rel=0&modestbranding=1&autohide=1"
+                                    frameborder="0" />
+                         </div>
+                    </td>
+                    <!--If it is the last video put in the last row tag-->
+                    {% if forloop.last %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <h1>No Videos are avaible</h1>
+        {% endif %}
+    </div>
+</body>
+</html>
