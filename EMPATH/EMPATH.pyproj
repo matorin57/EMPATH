@@ -31,17 +31,27 @@
     <Compile Include="website\migrations\__init__.py" />
     <Compile Include="website\models.py" />
     <Compile Include="website\tests.py" />
+    <Compile Include="website\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="website\views.py" />
     <Compile Include="website\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="website\templates\stories.html" />
+    <Content Include="website\static\js\generators.js" />
+    <Content Include="website\templates\website\manageVideos.html" />
+    <Content Include="website\templates\website\stories.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EMPATH" />
     <Folder Include="website" />
     <Folder Include="website\migrations" />
+    <Folder Include="website\static\" />
+    <Folder Include="website\static\css\" />
+    <Folder Include="website\static\img\" />
+    <Folder Include="website\static\js\" />
     <Folder Include="website\templates" />
+    <Folder Include="website\templates\website\" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
