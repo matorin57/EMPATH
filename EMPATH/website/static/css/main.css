@@ -1,7 +1,18 @@
-﻿.topMenu
+﻿/*.topMenu
 {
-       background-color:#000000;
+       background-color:white;
+}*/
+/*Not sure if going to be used*/
+.empath .videoPlayer{
+    width:300px;
+    height:300px;
+    frameborder:0;
 }
-body{
-    background-color:#000000;
+.empath .shareButtonPanel{
+    width:300px;
+}
+.empath .claro .dijitTitlePane{
+    color:#FBBBB9;
+    
+    /*border:1px solid #769DC0;*/
 }

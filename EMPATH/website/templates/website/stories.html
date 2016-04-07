@@ -4,13 +4,27 @@
 
 <head>
     
-    <meta charset="utf-8" />
+    <!--<meta charset="utf-8" />-->
     <title>Stories</title>
-    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"
-            data-dojo-config="async: true"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/dojo/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <script src="/static/dojo/dojo/dojo.js"
+            data-dojo-config="async: true,parseOnLoad: true"></script>
+    <!--Dojo Include Will Use DOJO fx eventually-->
+    <script>
+        require(["dojo/dom", "dijit/layout/ContentPane","dijit/TitlePane","dojo/parser","dojo/domReady!"], function (dom,contentPane,titlePane,parser) {
+            window.dom = dom;
+            window.parser = parser;
+            parser.parse();
+             window.contentPane = contentPane;
+             window.titlePane = titlePane;
+        });
+    </script>
+    
 </head>
-<body class="claro">
+<body class="claro empath">
+    
     <!--Script Include for FaceBook button-->
     <div id="fb-root"></div>
         <script>
@@ -22,12 +36,9 @@
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-    <!--Dojo Include Will Use DOJO fx eventually-->
-    <script>require(["dojo/dom", "dijit/layout/ContentPane"], function (dom) {
-        window.dom = dom;
-    });</script>
+  
     <!--Put top title pane here, possible call JS function to generate it so it will be the same across all the pages-->
-    <div name="topMenu" class="topMenu" data-dojo-type="dijit/layout/ContentPane"  style ="width: 100%; height: 100px;">
+    <div name="topMenu" class="topMenu"  style ="width: 100%; height: 100px;">
         <table>
             <tr>
                 <td>
@@ -56,7 +67,10 @@
     <!--Templated Loop to link in videos from Django Database-->
     <div name="videoArea" class="bodyArea">
         {% if videoList %}
-            <table>
+            <script>
+                window.numVideos = {{videoList|length}};
+            </script>
+            <table align="center">
                 <!--Loop Through Every Video-->
                 {% for video in videoList %}
                     <!--If this is the first iteration, add a row tag-->
@@ -70,23 +84,28 @@
                     <td>
                         <!--Insert Video-->
                         <div name ="video{{forloop.counter0}}">
-                            <iframe id="videoPlayer{{forloop.counter0}}" type="text/html" width="450" height="450"
+                            <!-- youtube embed <iframe id="videoPlayer{{forloop.counter0}}" type="text/html" width="450" height="450"
                                     src="http://www.youtube.com/embed/{{video.youtubeId}}?rel=0&modestbranding=1&autohide=1"
-                                    frameborder="0" ></iframe>
+                                    frameborder="0" ></iframe>-->
+                            <iframe class="videoPlayer" name ="player{{forloop.copunter0}}" src="//player.vimeo.com/video/{{video.youtubeId}}?portrait=0&color=FBBBB9" 
+                                       webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                          </div>
-                        <table name ="shareButtons{{forloop.counter0}}">
-                          <tr>
-                              <td>
-                                <div class="fb-share-button" data-href="https://www.youtube.com/watch?v={{video.youtubeId}}" data-layout="button" style="margin-bottom:-4px;" ></div>
-                              </td>
-                              <td>
-                                  <div><div style="margin-bottom:4px"></div>
-                                <a href="https://twitter.com/share" class="twitter-share-button"  data-url="http://youtube.com/watch?v={{video.youtubeId}}">Tweet</a>
-                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                               </div>
-                             </td>
-                         </tr>  
-                        </table>
+                        <div id="shareButtonTitlePane{{forloop.counter0}}" data-dojo-id="shareButtonTitlePane{{forloop.counter0}}" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Share',open:false" >
+                            <table name="shareButtons{{forloop.counter0}}">
+                                <tr>
+                                    <td>
+                                        <div class="fb-share-button" data-href="https://vimeo.com/video/{{video.youtubeId}}" data-layout="button" style="margin-bottom:-4px;"></div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <div style="margin-bottom:4px"></div>
+                                            <a href="https://twitter.com/share" class="twitter-share-button" text="Feel this story" data-url="https://vimeo.com/video/{{video.youtubeId}}">Tweet</a>
+                                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                     <!--If it is the last video put in the last row tag-->
                     {% if forloop.last %}

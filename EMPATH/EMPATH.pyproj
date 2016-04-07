@@ -38,7 +38,12 @@
     <Compile Include="website\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="website\static\js\generators.js" />
+    <Content Include="website\static\css\main.css" />
+    <Content Include="website\static\img\opinions-selected.png" />
+    <Content Include="website\static\img\opinions-unselected.png" />
+    <Content Include="website\static\img\splash.png" />
+    <Content Include="website\static\img\stories-selected.png" />
+    <Content Include="website\static\img\stories-unselected.png" />
     <Content Include="website\templates\website\manageVideos.html" />
     <Content Include="website\templates\website\stories.html" />
   </ItemGroup>
